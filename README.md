@@ -2,12 +2,12 @@
 Please find JoziRush Web App link here : https://jozirushsa.netlify.app/
 
 ******************************************************************************************************************************************************************************************************************
-🎉 What is JoziRush?
+🎉 *~What is JoziRush?~*
 
 
-JoziRush is your ultimate tourism app designed to help you explore Johannesburg’s vibrant culture, attractions, and events — all in one easy, exciting place! Whether you’re a local or a visitor, JoziRush makes discovering the city’s hidden gems simple and fun.
+JoziRush is your ultimate tourism app designed to help you explore Johannesburg’s vibrant culture, attractions, and events all in one easy, exciting place! Whether you’re a local or a visitor, JoziRush makes discovering the city’s hidden gems simple and fun.
 
-✨ Key Features
+✨ *Key Features*
 
 - Interactive Home Page: Dive into Johannesburg’s vibe with stunning videos and lively animations that bring the city to life.
 
@@ -37,6 +37,6 @@ JoziRush is your ultimate tourism app designed to help you explore Johannesburg�
 
  -  Applied bright gradients and warm colors inspired by Johannesburg’s energy.
 
-🔐 Created a payment page placeholder, ready for future secure gateway integration.
+ - Created a payment page placeholder, ready for future secure gateway integration.
 
-JoziRush combines technology, culture, and vibrant design to make exploring Johannesburg an unforgettable adventure! 🌍✨
+JoziRush combines technology, culture, and vibrant design to make exploring Johannesburg an unforgettable adventure.
