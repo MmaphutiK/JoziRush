@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:lottie/lottie.dart';
@@ -22,8 +21,8 @@ class JoziRushApp extends StatelessWidget {
       title: 'JoziRush',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFFA97458), // light brown
-        scaffoldBackgroundColor: const Color(0xFFFAF7F0), // off-white
+        primaryColor: const Color(0xFFFFFFFF),
+        scaffoldBackgroundColor: const Color(0xFFFAF7F0),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: const Color(0xFFA97458),
           secondary: const Color(0xFFFF6D00),
@@ -34,7 +33,7 @@ class JoziRushApp extends StatelessWidget {
           onSurface: const Color(0xFF4E342E),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: null,
+          backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
           elevation: 4,
           shadowColor: Colors.black54,
@@ -65,9 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<String> _titles = const [
     'Home',
-    'Prices',
-    'About',
-    'Contact',
+    'Packages & Pricing',
+    'About Us',
+    'Get in Touch',
     'Gallery',
   ];
 
@@ -152,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: const Center(
                   child: Text(
-                    '© 2025 JoziRush. All rights reserved.',
+                    '© 2025 JoziRush. Designed with ♥ in Johannesburg.',
                     style: TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                 ),
@@ -183,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'JoziRush Menu',
+                    'Explore JoziRush',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -206,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const Divider(color: Colors.white54),
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.white),
-                title: const Text('Sign Out', style: TextStyle(color: Colors.white)),
+                title: const Text('Log Out', style: TextStyle(color: Colors.white)),
                 onTap: () {
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -300,23 +299,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
         const SizedBox(height: 16),
         const Text(
-          'Discover Jozi like never before!',
+          'Discover Jozi like never before! ✨',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: lightBrown,
           ),
         ),
         const SizedBox(height: 10),
         const Text(
-          'From rooftop bars to historic landmarks, JoziRush brings the city to your fingertips.',
+          'From rooftop views to hidden gems, JoziRush connects you to the pulse of the city.',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: lightBrown),
+          style: TextStyle(fontSize: 16, color: lightBrown),
         ),
         const SizedBox(height: 20),
         const Text(
-          '🎥 Experience the vibe',
+          '🎥 Get a Taste of the City',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -332,7 +331,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             : const Center(child: CircularProgressIndicator()),
         const SizedBox(height: 20),
         const Text(
-          '✨ JoziRush in Motion',
+          '🌆 JoziRush in Motion',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -350,7 +349,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Text(
-              'Explore Johannesburg’s vibrant culture and exciting events.',
+              'Explore the heart of Johannesburg with JoziRush — your local experience guide.',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

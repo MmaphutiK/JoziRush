@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'register.dart'; // This is our RegisterPage
+import 'package:untitled/storage.dart';
 
 // =================== Login ===================
+
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -13,17 +17,36 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   void _login() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
     if (_formKey.currentState!.validate()) {
+      if (!registeredUsers.containsKey(email)) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Email not found. Please register.'),
+          backgroundColor: Colors.red,
+        ));
+        return;
+      }
+
+      if (registeredUsers[email] != password) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Incorrect password.'),
+          backgroundColor: Colors.red,
+        ));
+        return;
+      }
+
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
           const HomeScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            final tween =
-            Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero);
+            final tween = Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero);
             final curvedAnimation =
             CurvedAnimation(parent: animation, curve: Curves.easeInOut);
             return SlideTransition(
@@ -109,7 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                           if (value == null || value.isEmpty) {
                             return 'Email is required';
                           }
-                          final emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+\w{2,4}$');
+                          final emailRegex =
+                          RegExp(r'^[\w-.]+@([\w-]+\.)+\w{2,4}$');
                           if (!emailRegex.hasMatch(value)) {
                             return 'Enter a valid email address';
                           }
@@ -119,12 +143,24 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 20),
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
                           labelText: 'Password',
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           filled: true,
                           fillColor: Colors.white,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.length < 6) {
@@ -133,7 +169,34 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            final email = _emailController.text.trim();
+                            if (email.isEmpty ||
+                                !registeredUsers.containsKey(email)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Enter a registered email to reset password.'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Password reset link sent to $email'),
+                                  backgroundColor: Colors.orange,
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text('Forgot Password?'),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
@@ -141,7 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: _login,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: orange,
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                padding:
+                                const EdgeInsets.symmetric(vertical: 14),
                               ),
                               child: const Text('Login',
                                   style: TextStyle(fontSize: 16)),
@@ -153,7 +217,8 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: _goToRegister,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: purple,
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                padding:
+                                const EdgeInsets.symmetric(vertical: 14),
                               ),
                               child: const Text('Register',
                                   style: TextStyle(fontSize: 16)),
@@ -164,128 +229,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// =================== Registration Page ===================
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
-
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  void _register() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Account created successfully!'),
-        backgroundColor: Colors.green,
-      ));
-      Navigator.pop(context); // Go back to login
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const lightBrown = Color(0xFFA97458);
-    const purple = Color(0xFF6A1B9A);
-
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFAF7F0), Color(0xFFA97458)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.only(bottom: 20),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [purple, lightBrown],
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Create a New Account',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      }
-                      final emailRegex =
-                      RegExp(r'^[\w-.]+@([\w-]+\.)+\w{2,4}$');
-                      if (!emailRegex.hasMatch(value)) {
-                        return 'Enter a valid email address';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: _register,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: purple,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 14, horizontal: 30),
-                    ),
-                    child: const Text('Register',
-                        style: TextStyle(fontSize: 16)),
-                  ),
-                ],
               ),
             ),
           ),
