@@ -4,7 +4,7 @@
 *****************************************************************************************************************************************************************************************************************
 
 
-Please find JoziRush Web App link here : https:https://jozirushsa.netlify.app/
+Please find JoziRush Web App link here : https://jozirushsa.netlify.app/
 
 
 
