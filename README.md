@@ -1,6 +1,6 @@
 # JoziRush 
 
-**Please open the **JoziRush_Application*** file to access all the code.**
+**Please open the **JoziRush_App*** file to access all the code.**
 *****************************************************************************************************************************************************************************************************************
 
 
